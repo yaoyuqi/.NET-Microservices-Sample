@@ -60,7 +60,8 @@ builder.Services.AddAuthorization(option =>
 {
     option.AddPolicy(configuration["Identity:Scopes:OrdersManagement"], policy =>
     {
-        policy.RequireClaim("scope", $"{configuration["Identity:Audience"]}.{configuration["Identity:Scopes:OrdersManagement"]}");    });
+        policy.RequireClaim("scope", $"{configuration["Identity:Audience"]}.{configuration["Identity:Scopes:OrdersManagement"]}");
+    });
     option.AddPolicy(configuration["Identity:Scopes:GetOrders"], policy =>
     {
         policy.RequireClaim("scope",
