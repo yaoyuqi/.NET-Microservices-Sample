@@ -1,5 +1,5 @@
 trigger:
-- main
+- none
 
 variables:
   azureSubscription: 'sc-azure-rg-microservices'
