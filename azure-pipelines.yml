@@ -1,0 +1,36 @@
+trigger:
+- none
+
+variables:
+  azureSubscription: 'sc-azure-rg-microservices'
+  acrName: 'arcjeffmicroservices01'
+  imageRepository: 'productservice'
+  containerAppName: 'arc-productservice'
+  resourceGroup: 'jeff-microservices-learning'
+  dockerfilePath: 'src/Services/Products/ProductService/Dockerfile'
+  tag: '$(Build.BuildId)'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: AzureCLI@2
+  displayName: Build, push and deploy ProductService
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az acr login --name $(acrName)
+
+      docker build \
+        -t $(acrName).azurecr.io/$(imageRepository):$(tag) \
+        -f $(dockerfilePath) \
+        .
+
+      docker push $(acrName).azurecr.io/$(imageRepository):$(tag)
+
+      az containerapp update \
+        --name $(containerAppName) \
+        --resource-group $(resourceGroup) \
+        --image $(acrName).azurecr.io/$(imageRepository):$(tag)
