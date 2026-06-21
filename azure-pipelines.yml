@@ -3,7 +3,7 @@ trigger:
 
 variables:
   azureSubscription: 'sc-azure-rg-microservices'
-  acrName: 'arc-productservice'
+  acrName: 'arcjeffmicroservices01'
   imageRepository: 'productservice'
   containerAppName: 'arc-productservice'
   resourceGroup: 'jeff-microservices-learning'
